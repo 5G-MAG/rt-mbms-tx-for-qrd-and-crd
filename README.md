@@ -16,7 +16,7 @@ A list of specification related to this repository is available in the [Standard
 
 ## Install dependencies
 
-#### Ubuntu 22.04 LTS
+On Ubuntu 22.04 LTS:
 ````
 sudo apt update
 sudo apt install ssh g++ git libboost-atomic-dev libboost-thread-dev libboost-system-dev libboost-date-time-dev libboost-regex-dev libboost-filesystem-dev libboost-random-dev libboost-chrono-dev libboost-serialization-dev libwebsocketpp-dev openssl libssl-dev ninja-build libspdlog-dev libmbedtls-dev libboost-all-dev libconfig++-dev libsctp-dev libfftw3-dev vim libcpprest-dev libusb-1.0-0-dev net-tools smcroute python3-pip clang-tidy gpsd gpsd-clients libgps-dev
