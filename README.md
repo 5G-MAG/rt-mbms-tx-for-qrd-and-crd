@@ -1,12 +1,16 @@
-# Table of contents
+## Introduction
 
-1. Install dependencies
-2. Install SDR drivers
-3. Build the transmitter
-4. Run the transmitter
-5. Send data
+This repository holds an implementation of an LTE-based 5G Broadcast transmitter tailored to operate with Qualcomm Reference Design (QRD) and QRC devices.cast networks.
 
-## Step 1: Install Dependencies
+### Specifications
+
+A list of specification related to this repository is available in the [Standards Wiki](https://github.com/5G-MAG/Standards/wiki/MBMS-&-LTE-based-5G-Broadcast:-Relevant-Specifications).
+
+### About the implementation
+
+[]
+
+## Install dependencies
 
 #### Ubuntu 22.04 LTS
 ````
@@ -17,8 +21,8 @@ sudo pip3 install cpplint
 sudo pip3 install psutil
 ````
 
-## Step 2: Install SDR drivers
-### 2.1 Installing SDR drivers
+## Install SDR drivers
+### Installing SDR drivers
 
 ````
 sudo apt install libsoapysdr-dev soapysdr-tools
@@ -34,7 +38,7 @@ Finally, install the BladeRF firmware:
 sudo bladeRF-install-firmware
 ````
 
-### 2.2 Check SDR availability
+### Check SDR availability
 Check if the SDR can be found on your system
 ````
 SoapySDRUtil --find
@@ -54,9 +58,7 @@ Found device 2
   serial = ANY
 ````
 
-## Step 3: Build the transmitter
-
-### 3.1 Getting the source code
+## Downloading
 ````
 git clone --recurse-submodules -b qrd-tx https://github.com/nakolos/srsRAN.git
 
@@ -67,27 +69,25 @@ git submodule update
 mkdir build && cd build
 ````
 
-### 3.2 Build setup
+## Building
 ``
 cmake -DCMAKE_INSTALL_PREFIX=/usr -GNinja ..
 ``
-
-### 3.3 Building
 ``
 ninja
 ``
 
-### 3.4 Installing
+## Installing
 ``
 sudo ninja install
 ``
 
-### 3.5 Install configs
+## Configuration after installation
+Install the configuration:
 ``
 sudo ./srsran_install_configs.sh user
 ``
 
-### 3.6: Adjust configuration files
 After the installtion, you have to adjust the enb, rr, epc config files to your desired frequency, bandwith, tx gain, MNC, MCC ...
 
 or you can use our [templates](https://github.com/nakolos/srsRAN/tree/qrd-tx/Config-Template). Download them and place them in ``/root/.config/srsran/``.
@@ -99,13 +99,13 @@ cd srsRAN/
 cp sib.conf.mbsfn build/sib.conf.mbsfn
 ````
 
-## Step 4: Run the transmitter
+## Running
 Starting the transmitter requires the follwing 3 steps:
 1. Starting the MBMS-Gateway
 2. Starting the EPC
 3. Starting the ENB
 
-### 4.1 Starting the MBMS-Gateway
+### Starting the MBMS-Gateway
 ``
 sudo srsmbms
 ``
@@ -119,22 +119,19 @@ sudo route add -net 239.11.4.0 netmask 255.255.255.0 dev sgi_mb
 
 You can use any multicast route. 
 
-### 4.2 Start the EPC
+### Starting the EPC
 ``
 sudo srsepc
 ``
 
-### 4.3 Start the ENB
+### Starting the ENB
 ````
 cd srsRAN/build
 
 sudo srsenb/src/srsenb
 ````
 
-After that the transmitter is running. 
-
-## Step 5: Sending data
-The transmitter is running and is ready to receive a multicast stream. Now you can, for example, transcode a local .mp4 file to rtp with ffmpeg:
+After this, the transmitter is running and is ready to receive a multicast stream. Now you can, for example, transcode a local .mp4 file to rtp with ffmpeg:
 
 ``
 ffmpeg -stream_loop -1 -re -i <Input-file> -vcodec copy -an -f rtp_mpegts udp://239.11.4.50:9988
