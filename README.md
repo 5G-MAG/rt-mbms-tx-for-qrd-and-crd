@@ -1,6 +1,6 @@
 ## Introduction
 
-This repository holds an implementation of an LTE-based 5G Broadcast transmitter tailored to operate with Qualcomm Reference Design (QRD) and QRC devices.cast networks.
+This repository holds an implementation of an LTE-based 5G Broadcast transmitter tailored to operate with Qualcomm Reference Design (QRD) and QRC devices.
 
 ### Specifications
 
