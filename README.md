@@ -26,13 +26,12 @@ sudo pip3 install psutil
 ````
 
 ## Install SDR drivers
-### Installing SDR drivers
 
 ````
 sudo apt install libsoapysdr-dev soapysdr-tools
 ````
 
-##### Using BladeRF with Soapy
+### Using BladeRF with Soapy
 For BladeRF the relevant package is named *soapysdr-module-bladerf*. Install it by running:
 ````
 sudo apt install soapysdr-module-bladerf
