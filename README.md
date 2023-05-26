@@ -1,6 +1,10 @@
-## Introduction
+# 5G Broadcast Transmitter for QRD and CRD
 
 This repository holds an implementation of an LTE-based 5G Broadcast transmitter tailored to operate with Qualcomm Reference Design (QRD) and QRC devices.
+
+## Introduction
+
+[]
 
 ### Specifications
 
