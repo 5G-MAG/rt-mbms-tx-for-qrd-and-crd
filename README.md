@@ -63,9 +63,9 @@ Found device 2
 
 ## Downloading
 ````
-git clone --recurse-submodules -b qrd-tx https://github.com/nakolos/srsRAN.git
+git clone --recurse-submodules -b qrd-tx https://github.com/5G-MAG/rt-mbms-tx-for-qrd-and-crd.git
 
-cd srsRAN/
+cd rt-mbms-tx-for-qrd-and-crd
 
 git submodule update
 
@@ -93,12 +93,12 @@ sudo ./srsran_install_configs.sh user
 
 After the installtion, you have to adjust the enb, rr, epc config files to your desired frequency, bandwith, tx gain, MNC, MCC ...
 
-or you can use our [templates](https://github.com/nakolos/srsRAN/tree/qrd-tx/Config-Template). Download them and place them in ``/root/.config/srsran/``.
+or you can use our [templates](https://github.com/5G-MAG/rt-mbms-tx-for-qrd-and-crd/tree/qrd-tx/Config-Template). Download them and place them in ``/root/.config/srsran/``.
 You can still change the frequency, gain or whatever if you want to. 
 
 Also make sure to copy the adapted sib.conf.mbsfn file to the build directory:
 ````
-cd srsRAN/
+cd rt-mbms-tx-for-qrd-and-crd/
 cp sib.conf.mbsfn build/sib.conf.mbsfn
 ````
 
@@ -129,7 +129,7 @@ sudo srsepc
 
 ### Starting the ENB
 ````
-cd srsRAN/build
+cd rt-mbms-tx-for-qrd-and-crd/build
 
 sudo srsenb/src/srsenb
 ````
