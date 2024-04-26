@@ -65,6 +65,7 @@ int parse_sib3(std::string filename, asn1::rrc::sib_type3_s* data);
 int parse_sib4(std::string filename, asn1::rrc::sib_type4_s* data);
 int parse_sib7(std::string filename, asn1::rrc::sib_type7_s* data);
 int parse_sib9(std::string filename, asn1::rrc::sib_type9_s* data);
+int parse_sib12(std::string filename, asn1::rrc::sib_type12_r9_s* data); // new sib 12
 int parse_sib13(std::string filename, asn1::rrc::sib_type13_r9_s* data);
 int parse_sibs(all_args_t* args_, rrc_cfg_t* rrc_cfg_, srsenb::phy_cfg_t* phy_config_common);
 
@@ -561,6 +562,72 @@ field_asn1_bitstring_number<BitString, uint32_t>* make_asn1_bitstring_number_par
 {
   return new field_asn1_bitstring_number<BitString, uint32_t>(name, store_ptr);
 }
+
+// field_asn1_octstring_number
+// num type if num
+template <class OctString, class NumType>
+class field_asn1_octstring_number : public field_asn1
+{
+  OctString* store_ptr;
+public:
+  field_asn1_octstring_number(const char* name_, OctString* store_ptr_, bool* enabled_value_ = NULL) :
+    field_asn1(name_, enabled_value_),
+    store_ptr(store_ptr_)
+  {
+  }
+
+  int parse_value(Setting& root)
+  {
+    NumType val;
+    if (parser::lookupValue(root, name, &val)) {
+        store_ptr->from_number(val);
+      return 0;
+    } else {
+      std::string str_val;
+      if (parser::lookupValue(root, name, &str_val)) {
+        fprintf(stderr, "PARSER ERROR: Expected number for field %s but got the string \"%s\"\n", name,
+                str_val.c_str());
+      }
+    }
+    return -1;
+  }
+};
+//num type is string
+template <class OctString>
+class field_asn1_octstring_number<OctString, std::string> : public field_asn1
+{
+  OctString* store_ptr;
+public:
+  field_asn1_octstring_number(const char* name_, OctString* store_ptr_, bool* enabled_value_ = NULL) :
+    field_asn1(name_, enabled_value_),
+    store_ptr(store_ptr_)
+  {
+  }
+
+  int parse_value(Setting& root)
+  {
+    std::string val;
+    if (parser::lookupValue(root, name, &val)) {
+        store_ptr->from_string(val);
+      return 0;
+    } else {
+      std::string str_val;
+      if (parser::lookupValue(root, name, &str_val)) {
+        fprintf(stderr, "PARSER ERROR: Expected number for field %s but got the string \"%s\"\n", name,
+                str_val.c_str());
+      }
+    }
+    return -1;
+  }
+};
+
+template <class OctString>
+field_asn1_octstring_number<OctString, uint32_t>* make_asn1_octstring_number_parser(const char* name,
+                                                                                    OctString*  store_ptr)
+{
+  return new field_asn1_octstring_number<OctString, uint32_t>(name, store_ptr);
+}
+//end
 
 class phr_cnfg_parser : public parser::field_itf
 {
