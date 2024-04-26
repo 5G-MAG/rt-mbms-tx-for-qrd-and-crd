@@ -1,18 +1,19 @@
-# 5G Broadcast Transmitter for QRD and CRD
-
-This repository holds an implementation of an LTE-based 5G Broadcast transmitter tailored to operate with Qualcomm Reference Design (QRD) and QRC devices.
+<h1 align="center">5G Broadcast Transmitter for QRD and CRD</h1>
+<p align="center">
+  <img src="https://img.shields.io/github/v/tag/5G-MAG/rt-mbms-tx-for-qrd-and-crd?label=version" alt="Version">
+  <img src="https://img.shields.io/badge/Status-Under_Development-yellow" alt="Under Development">
+  <img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg" alt="License">
+</p>
 
 ## Introduction
 
-[]
+The 5G Broadcast Transmitter for QRD and CRD is an extension of and MBMS-enabled eNodeB tailored to operate as a 5G Broadcast transmitter compatible with Qualcomm Reference Design (QRD) and QRC devices.
 
-### Specifications
-
-A list of specification related to this repository is available in the [Standards Wiki](https://github.com/5G-MAG/Standards/wiki/MBMS-&-LTE-based-5G-Broadcast:-Relevant-Specifications).
+Additional information can be found at: https://5g-mag.github.io/Getting-Started/pages/lte-based-5g-broadcast/
 
 ### About the implementation
 
-[]
+This implemenation is based on the [srsRAN_4G Project](https://github.com/srsran/srsRAN_4G). The eNodeB has been modified in order not to require uplink connectivity from UEs in order to MBMS data.
 
 ## Install dependencies
 
