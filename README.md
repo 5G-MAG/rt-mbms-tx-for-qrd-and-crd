@@ -1,7 +1,7 @@
 <h1 align="center">5G Broadcast Transmitter for QRD and CRD</h1>
 <p align="center">
-  <img src="https://img.shields.io/github/v/tag/5G-MAG/rt-mbms-tx-for-qrd-and-crd?label=version" alt="Version">
   <img src="https://img.shields.io/badge/Status-Under_Development-yellow" alt="Under Development">
+  <img src="https://img.shields.io/github/v/tag/5G-MAG/rt-mbms-tx-for-qrd-and-crd?label=version" alt="Version">
   <img src="https://img.shields.io/badge/License-AGPL_v3-blue.svg" alt="License">
 </p>
 
