@@ -2218,6 +2218,56 @@ int parse_sib15(std::string filename, sib_type15_r11_s* data)
   data->mbms_sai_intra_freq_r11[3] = 4;
   return 0;
 }
+int parse_sib12(std::string filename, asn1::rrc::sib_type12_r9_s* data) // new sib 12
+{
+  parser::section sib12("sib12");
+  fprintf(stdout,"parse sib12\n");
+  sib12.add_field(make_asn1_bitstring_number_parser("message_identifier", &data->msg_id_r9));
+  sib12.add_field(make_asn1_bitstring_number_parser("serial_number", &data->serial_num_r9));
+  sib12.add_field(make_asn1_octstring_number_parser("data_coding_scheme", &data->data_coding_scheme_r9));
+  data->data_coding_scheme_r9[0] = 0x48;
+  data->data_coding_scheme_r9_present = true;
+  sib12.add_field(make_asn1_enum_str_parser("warning_msg_segment_type", &data->warning_msg_segment_type_r9));
+  sib12.add_field(new parser::field<uint8_t>("warning_msg_segment_num", &data->warning_msg_segment_num_r9));
+  field_asn1_octstring_number<asn1::dyn_octstring,std::string> warning_msg_segment("warning_msg_segment_r9", &data->warning_msg_segment_r9);
+  std::string str;
+	std::fstream f("/home/fivegmag/bytecode", std::ios::in);
+	std::stringstream ss;
+	int num;
+	int bytes;
+	int remain;
+	ss << f.rdbuf();
+	f.close();
+	str = ss.str();
+	while (true)
+	{
+		int pos = str.find('\n');
+		if (pos == (int)std::string::npos) break;
+		str.erase(pos,1);
+	}
+	bytes = str.length() / 2;
+	remain = str.length() % 2;
+	ss = std::stringstream();
+  data->warning_msg_segment_r9.resize(200);
+	for (int i = 0; i < bytes; i++)
+	{
+		int beg = i * 2;
+		unsigned int num;
+		ss  << str[beg] << str[beg + 1];
+		ss >> std::hex >> num;
+    data->warning_msg_segment_r9[i] = num;
+		ss.clear();
+	}
+	if (remain != 0)
+	{
+		unsigned int num;
+		ss << str[str.length() - 1];
+		ss >> std::hex >> num;
+		data->warning_msg_segment_r9[bytes] = num;
+		ss.clear();
+	}
+  return parser::parse_section(std::move(filename),&sib12);
+}
 int parse_sib13(std::string filename, sib_type13_r9_s* data)
 {
   parser::section sib13("sib13");
@@ -2249,6 +2299,7 @@ int parse_sibs(all_args_t* args_, rrc_cfg_t* rrc_cfg_, srsenb::phy_cfg_t* phy_co
   sib_type4_s*     sib4  = &rrc_cfg_->sibs[3].set_sib4();
   sib_type7_s*     sib7  = &rrc_cfg_->sibs[6].set_sib7();
   sib_type9_s*     sib9  = &rrc_cfg_->sibs[8].set_sib9();
+  sib_type12_r9_s* sib12 = &rrc_cfg_->sibs[11].set_sib12_v920();
   sib_type13_r9_s* sib13 = &rrc_cfg_->sibs[12].set_sib13_v920();
   sib_type15_r11_s* sib15 = &rrc_cfg_->sibs[14].set_sib15_v1130();
   sib_type16_r11_s* sib16 = &rrc_cfg_->sibs[15].set_sib16_v1130();
@@ -2328,6 +2379,14 @@ int parse_sibs(all_args_t* args_, rrc_cfg_t* rrc_cfg_, srsenb::phy_cfg_t* phy_co
   // Generate SIB9 if defined in mapping info
   if (sib_is_present(sib1->sched_info_list, sib_type_e::sib_type9)) {
     if (sib_sections::parse_sib9(args_->enb_files.sib_config, sib9) != SRSRAN_SUCCESS) {
+      return SRSRAN_ERROR;
+    }
+  }
+
+  // Generate SIB12 if defined in mapping info
+  if (sib_is_present(sib1->sched_info_list, sib_type_e::sib_type12_v920)) {
+    if (sib_sections::parse_sib12(args_->enb_files.sib_config, sib12) != SRSRAN_SUCCESS) {
+      fprintf(stdout,"sib12 error\n");
       return SRSRAN_ERROR;
     }
   }

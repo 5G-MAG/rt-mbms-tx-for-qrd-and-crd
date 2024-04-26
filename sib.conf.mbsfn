@@ -11,7 +11,7 @@ sib1 =
             si_periodicity = 8;
 
             // comma-separated array of SIB-indexes (from 3 to 13), leave empty or commented to just scheduler sib2
-            si_mapping_info = [13,15];
+            si_mapping_info = [12,13,15];
         }
     );
     system_info_value_tag = 0;
@@ -186,6 +186,16 @@ sib3 =
 #        }
 #    );
 #};
+
+sib12 =
+{
+    message_identifier = 0x1102;
+    serial_number = 0x3000;
+    data_coding_scheme = 01;
+    warning_msg_segment_type = "lastSegment";
+    warning_msg_segment_num = 0;
+    warning_msg_segment_r9 = "01C576597E2EBBC7F950A8D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D168341A8D46A3D1000A";
+};
 
 sib13 =
 {
