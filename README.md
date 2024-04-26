@@ -13,7 +13,7 @@ Additional information can be found at: https://5g-mag.github.io/Getting-Started
 
 ### About the implementation
 
-This implemenation is based on the [srsRAN_4G Project](https://github.com/srsran/srsRAN_4G). The eNodeB has been modified in order not to require uplink connectivity from UEs in order to MBMS data.
+This implementation is based on the [srsRAN_4G Project](https://github.com/srsran/srsRAN_4G). The eNodeB has been modified in order not to require uplink connectivity from UEs in order to MBMS data.
 
 ## Install dependencies
 
