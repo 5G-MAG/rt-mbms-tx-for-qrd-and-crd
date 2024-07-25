@@ -39,7 +39,9 @@ sudo apt install soapysdr-module-bladerf
 ````
 Finally, install the BladeRF firmware:
 ````
-sudo bladeRF-install-firmware
+sudo add-apt-repository ppa:nuandllc/bladerf
+sudo apt-get update
+sudo apt-get install bladerf
 ````
 
 ### Check SDR availability
