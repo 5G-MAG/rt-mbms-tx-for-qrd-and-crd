@@ -67,11 +67,8 @@ Found device 2
 ## Downloading
 ````
 git clone --recurse-submodules https://github.com/5G-MAG/rt-mbms-tx-for-qrd-and-crd.git
-
 cd rt-mbms-tx-for-qrd-and-crd
-
 git submodule update
-
 mkdir build && cd build
 ````
 
