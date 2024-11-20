@@ -1,5 +1,5 @@
-# Use Ubuntu 20.04 as the base image
-FROM ubuntu:20.04
+# Use multi-architecture base image
+FROM --platform=linux/amd64 ubuntu:22.04
 
 # Avoid any questions
 ARG DEBIAN_FRONTEND=noninteractive
