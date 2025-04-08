@@ -1,14 +1,14 @@
 # Use multi-architecture base image
-FROM --platform=linux/amd64 ubuntu:22.04
+FROM ubuntu:22.04
 
 # Avoid any questions
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Update apt-get
-RUN apt update
+RUN apt-get update
 
 # Install dependencies
-RUN apt install -y \
+RUN apt-get install -y \
     ssh g++ git libboost-atomic-dev libboost-thread-dev libboost-system-dev \
     libboost-date-time-dev libboost-regex-dev libboost-filesystem-dev \
     libboost-random-dev libboost-chrono-dev libboost-serialization-dev \
@@ -27,11 +27,11 @@ RUN apt install soapysdr-module-bladerf && \
     apt update && \
     apt install -y bladerf
 
-# Clone the repository
-RUN git clone --recurse-submodules https://github.com/5G-MAG/rt-mbms-tx-for-qrd-and-crd.git /rt-mbms-tx-for-qrd-and-crd
+# Copy the entire directory into the image
+COPY . /source/rt-mbms-tx-for-qrd-and-crd
 
 # Set working directory
-WORKDIR /rt-mbms-tx-for-qrd-and-crd
+WORKDIR /source/rt-mbms-tx-for-qrd-and-crd
 
 # Update submodules
 RUN git submodule update
@@ -39,8 +39,8 @@ RUN git submodule update
 # Create build directory
 RUN mkdir build
 
-# Set working directory to build
-WORKDIR /rt-mbms-tx-for-qrd-and-crd/build
+# Set working directory
+WORKDIR /source/rt-mbms-tx-for-qrd-and-crd/build
 
 # Run cmake
 RUN cmake -DCMAKE_INSTALL_PREFIX=/usr -GNinja ..
@@ -55,7 +55,7 @@ RUN ninja install
 RUN ./srsran_install_configs.sh user
 
 # Copy the docker-config directory into the container
-COPY docker-config /etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config
+COPY docker/config /etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config
 
 # Make sure the destination directory exists
 RUN mkdir -p /root/.config/srsran
@@ -64,10 +64,7 @@ RUN mkdir -p /root/.config/srsran
 RUN cp -r /etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config/bladerf /root/.config/srsran/
 
 # Copy the adapted sib.conf.mbsfn file to the build directory
-RUN cp ../sib.conf.mbsfn sib.conf.mbsfn
-
-# Set execute permissions for the run.sh script
-RUN chmod +x /etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config/run.sh
+RUN cp /etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config/sib.conf.mbsfn sib.conf.mbsfn
 
 # Set entrypoint to execute the script
-CMD ["/etc/5gmag/rt-mbms-tx-for-qrd-and-crd/docker-config/run.sh"]
+CMD ["/etc/run-docker.sh"]
