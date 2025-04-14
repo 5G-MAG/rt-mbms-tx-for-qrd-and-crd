@@ -1,0 +1,15 @@
+services:
+  mbms-tx-for-qrd-and-crd:
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    platform: linux/amd64
+    network_mode: host # Use the same network stack as the host to receive multicast packets in the container
+    devices:
+      - /dev/bus/usb:/dev/bus/usb # Provide access to USB devices to access SDR
+    environment:
+      - DEBIAN_FRONTEND=noninteractive
+    volumes:
+      - ./run.sh:/etc/run-docker.sh
+      - ./tmp:/tmp
+
