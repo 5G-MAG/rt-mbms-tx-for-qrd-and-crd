@@ -2231,7 +2231,7 @@ int parse_sib12(std::string filename, asn1::rrc::sib_type12_r9_s* data) // new s
   sib12.add_field(new parser::field<uint8_t>("warning_msg_segment_num", &data->warning_msg_segment_num_r9));
   field_asn1_octstring_number<asn1::dyn_octstring,std::string> warning_msg_segment("warning_msg_segment_r9", &data->warning_msg_segment_r9);
   std::string str;
-	std::fstream f("~/rt-mbms-tx-for-qrd-and-crd-emergency-alerts/Config-Template/bytecode", std::ios::in);
+	std::fstream f("/home/fivegmag/bytecode", std::ios::in);
 	std::stringstream ss;
 	int num;
 	int bytes;
