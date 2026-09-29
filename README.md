@@ -131,6 +131,15 @@ cd rt-mbms-tx-for-qrd-and-crd/build
 sudo srsenb/src/srsenb
 ```
 
+### Docker (work in progress)
+
+The `docker` folder holds a Docker setup for a bladeRF SDR. `docker/docker-compose.yml` builds the
+image from `docker/Dockerfile`: Ubuntu 22.04, the dependencies above plus the SoapySDR and bladeRF
+packages, the build, install and configuration steps above, and the configuration files in
+`docker/config/bladerf` and `docker/config/sib.conf.mbsfn`. It gives the container the host's
+network and USB devices and runs `docker/run.sh`. At present that script starts only the MBMS
+gateway (`srsmbms`); the EPC and eNodeB lines are commented out.
+
 ## Contributing
 
 Contributions are welcome. How to raise an issue, fork the repository and open a pull request, and
